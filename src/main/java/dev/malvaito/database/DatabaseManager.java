@@ -27,7 +27,7 @@ public class DatabaseManager {
                 "player_nickname VARCHAR(16) NOT NULL," +
                 "kills INT DEFAULT 0," +
                 "deaths INT DEFAULT 0," +
-                "balance DOUBLE DEFAULT 0.0," +
+                "playtime TIMESTAMP DEFAULT CURRENT_TIMESTAMP," + // Cambiado a TIMESTAMP
                 "killstreak INT DEFAULT 0," +
                 "best_killstreak INT DEFAULT 0," +
                 "blocks_placed INT DEFAULT 0," +
@@ -75,11 +75,22 @@ public class DatabaseManager {
                 "UNIQUE(player_uuid, stone_id)" +
                 ");";
 
+        // SQL para la tabla de economía
+        String economyTableSQL = "CREATE TABLE IF NOT EXISTS economy (" +
+                "player_uuid VARCHAR(36) PRIMARY KEY," +
+                "player_nickname VARCHAR(16) NOT NULL," +
+                "balance DOUBLE DEFAULT 0.0," +
+                "total_spent DOUBLE DEFAULT 0.0," +
+                "total_received DOUBLE DEFAULT 0.0," +
+                "total_earned DOUBLE DEFAULT 0.0" +
+                ");";
+
         try (java.sql.Statement statement = databaseConnection.createStatement()) {
             statement.execute(statsTableSQL);
             statement.execute(homesTableSQL);
             statement.execute(protectionStonesTableSQL);
             statement.execute(protectionStonesMembersTableSQL);
+            statement.execute(economyTableSQL);
         } catch (SQLException e) {
             System.err.println("Error creating tables: " + e.getMessage());
         }

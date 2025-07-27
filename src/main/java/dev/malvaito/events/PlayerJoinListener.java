@@ -29,5 +29,21 @@ public class PlayerJoinListener implements Listener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Insertar o actualizar jugador en la tabla de economy
+        String economyQuery = "INSERT INTO economy (player_uuid, player_nickname, balance, total_spent, total_received, total_earned) VALUES (?, ?, ?, ?, ?, ?) " +
+                              "ON CONFLICT(player_uuid) DO UPDATE SET player_nickname=excluded.player_nickname;";
+
+        try (java.sql.PreparedStatement pstmt = databaseManager.getDatabaseConnection().prepareStatement(economyQuery)) {
+            pstmt.setString(1, player.getUniqueId().toString());
+            pstmt.setString(2, player.getName());
+            pstmt.setDouble(3, 0.0);
+            pstmt.setDouble(4, 0.0);
+            pstmt.setDouble(5, 0.0);
+            pstmt.setDouble(6, 0.0);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
