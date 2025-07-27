@@ -12,12 +12,10 @@ public class PlayerJoinListener implements Listener {
 
     private final AstroCore plugin;
     private final DatabaseManager databaseManager;
-    private final MiniMessage miniMessage;
-
     public PlayerJoinListener(AstroCore plugin, DatabaseManager databaseManager) {
         this.plugin = plugin;
         this.databaseManager = databaseManager;
-        this.miniMessage = MiniMessage.miniMessage();
+        MiniMessage.miniMessage();
     }
     
     @EventHandler

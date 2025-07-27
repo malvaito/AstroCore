@@ -15,12 +15,10 @@ import java.sql.SQLException;
 
 public class Economy implements CommandExecutor {
 
-    private final AstroCore plugin;
     private final DatabaseManager databaseManager;
     private final MiniMessage miniMessage;
 
     public Economy(AstroCore plugin, DatabaseManager databaseManager) {
-        this.plugin = plugin;
         this.databaseManager = databaseManager;
         this.miniMessage = MiniMessage.miniMessage();
     }
@@ -137,14 +135,11 @@ public class Economy implements CommandExecutor {
                                "ON CONFLICT(player_uuid) DO UPDATE SET balance = balance + ?, total_spent = total_spent + ?, total_received = total_received + ?, total_earned = total_earned + ?;";
 
             double currentBalance = 0.0;
-            boolean playerExists = false;
-
             try (PreparedStatement selectStmt = conn.prepareStatement(selectSql)) {
                 selectStmt.setString(1, player.getUniqueId().toString());
                 ResultSet rs = selectStmt.executeQuery();
                 if (rs.next()) {
                     currentBalance = rs.getDouble("balance");
-                    playerExists = true;
                 }
 
             }

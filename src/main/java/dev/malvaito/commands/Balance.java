@@ -3,7 +3,6 @@ package dev.malvaito.commands;
 import dev.malvaito.AstroCore;
 import dev.malvaito.database.DatabaseManager;
 import org.bukkit.Bukkit;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
