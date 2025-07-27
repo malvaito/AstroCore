@@ -2,6 +2,7 @@ package dev.malvaito;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import dev.malvaito.commands.Economy;
 import dev.malvaito.database.DatabaseManager;
 import dev.malvaito.events.PlayerJoinListener;
 
@@ -12,11 +13,14 @@ public class AstroCore extends JavaPlugin {
     @Override
     public void onEnable() {
         // Lógica de inicio del plugin
-        this.databaseManager = new DatabaseManager();
-        this.databaseManager.establishConnection();
+        this.databaseManager = DatabaseManager.getInstance();
 
         // Registrar eventos
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(databaseManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, databaseManager), this);
+
+        // Registrar comandos
+        getCommand("eco").setExecutor(new Economy(this, databaseManager));
+        getCommand("balance").setExecutor(new dev.malvaito.commands.Balance(this, databaseManager));
     }
 
     @Override

@@ -1,17 +1,23 @@
 package dev.malvaito.events;
 
+import dev.malvaito.AstroCore;
 import dev.malvaito.database.DatabaseManager;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
-    
+
+    private final AstroCore plugin;
     private final DatabaseManager databaseManager;
-    
-    public PlayerJoinListener(DatabaseManager databaseManager) {
+    private final MiniMessage miniMessage;
+
+    public PlayerJoinListener(AstroCore plugin, DatabaseManager databaseManager) {
+        this.plugin = plugin;
         this.databaseManager = databaseManager;
+        this.miniMessage = MiniMessage.miniMessage();
     }
     
     @EventHandler
@@ -27,6 +33,7 @@ public class PlayerJoinListener implements Listener {
             pstmt.setString(2, player.getName());
             pstmt.executeUpdate();
         } catch (Exception e) {
+            plugin.getLogger().severe("Error inserting/updating player stats: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -43,6 +50,7 @@ public class PlayerJoinListener implements Listener {
             pstmt.setDouble(6, 0.0);
             pstmt.executeUpdate();
         } catch (Exception e) {
+            plugin.getLogger().severe("Error inserting/updating player economy: " + e.getMessage());
             e.printStackTrace();
         }
     }

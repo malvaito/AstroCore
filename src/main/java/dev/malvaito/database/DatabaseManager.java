@@ -6,9 +6,23 @@ import java.sql.SQLException;
 
 public class DatabaseManager {
 
+    private static DatabaseManager instance;
+
+    private DatabaseManager() {
+        // Constructor privado para el patrón Singleton
+    }
+
     private Connection databaseConnection;
 
-    public void establishConnection() {
+    public static synchronized DatabaseManager getInstance() {
+        if (instance == null) {
+            instance = new DatabaseManager();
+            instance.establishConnection();
+        }
+        return instance;
+    }
+
+    private void establishConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
             databaseConnection = DriverManager.getConnection("jdbc:sqlite:plugins/AstroCore/database.db");
@@ -27,7 +41,7 @@ public class DatabaseManager {
                 "player_nickname VARCHAR(16) NOT NULL," +
                 "kills INT DEFAULT 0," +
                 "deaths INT DEFAULT 0," +
-                "playtime TIMESTAMP DEFAULT CURRENT_TIMESTAMP," + // Cambiado a TIMESTAMP
+                "playtime INTEGER DEFAULT 0," +
                 "killstreak INT DEFAULT 0," +
                 "best_killstreak INT DEFAULT 0," +
                 "blocks_placed INT DEFAULT 0," +
@@ -99,7 +113,9 @@ public class DatabaseManager {
     public void closeConnection() {
         if (databaseConnection != null) {
             try {
-                databaseConnection.close();
+                if (!databaseConnection.isClosed()) {
+                    databaseConnection.close();
+                }
             } catch (SQLException e) {
                 System.err.println("Error closing SQLite database connection: " + e.getMessage());
             }
@@ -107,6 +123,13 @@ public class DatabaseManager {
     }
 
     public Connection getDatabaseConnection() {
+        try {
+            if (databaseConnection == null || databaseConnection.isClosed()) {
+                establishConnection(); // Re-establish connection if it's closed or null
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking database connection status: " + e.getMessage());
+        }
         return databaseConnection;
     }
 }
