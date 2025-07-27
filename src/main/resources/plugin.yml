@@ -1,0 +1,5 @@
+name: AstroCore
+version: 1.0
+main: dev.malvaito.AstroCore
+author: Malvaito
+api-version: 1.21
