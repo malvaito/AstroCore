@@ -1,0 +1,4 @@
+tab:
+  header: "<gradient:#0000FF:#0000A0>AstroCore</gradient>\n<gray>Bienvenido a nuestro servidor!</gray>"
+  footer: "<yellow>Visita nuestra web: <gold>www.astrocore.com</gold></yellow>\n<red>¡Disfruta tu estancia!</red>"
+  tab-format: "<gray>[<gold>%vault_prefix%</gold>] %player_name%"

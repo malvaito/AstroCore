@@ -5,12 +5,14 @@ import dev.malvaito.database.DatabaseManager;
 import dev.malvaito.listeners.PlayerJoinListener;
 import dev.malvaito.listeners.PlayerQuitListener;
 import dev.malvaito.commands.TPA;
+import dev.malvaito.tab.TabManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 public class AstroCore extends JavaPlugin {
 
     private DatabaseManager databaseManager;
     public MiniMessage miniMessage;
+    private TabManager tabManager;
 
     @Override
     public void onEnable() {
@@ -18,8 +20,16 @@ public class AstroCore extends JavaPlugin {
         // Lógica de inicio del plugin
         this.databaseManager = DatabaseManager.getInstance();
 
+        // Inicializa el TabManager
+        this.tabManager = new TabManager(this);
+        // Carga la configuración del tab
+        this.tabManager.loadConfig();
+        // Actualiza el tab para todos los jugadores online
+        this.tabManager.updateAllPlayersTab();
+
         // Registrar eventos
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, databaseManager), this);
+        getServer().getPluginManager().registerEvents(new dev.malvaito.listeners.TabPlayerJoinListener(this.tabManager), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
 
@@ -35,6 +45,7 @@ public class AstroCore extends JavaPlugin {
         getCommand("tpaccept").setExecutor(tpaCommand);
         getCommand("tpahere").setExecutor(tpaCommand);
         getCommand("tpadeny").setExecutor(tpaCommand);
+        getCommand("tab").setExecutor(new dev.malvaito.commands.TabCommand(this));
 
 
     }
@@ -43,5 +54,9 @@ public class AstroCore extends JavaPlugin {
     public void onDisable() {
         // Lógica de apagado del plugin
         this.databaseManager.closeConnection();
+    }
+
+    public TabManager getTabManager() {
+        return tabManager;
     }
 }
