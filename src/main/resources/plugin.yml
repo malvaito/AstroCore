@@ -3,9 +3,15 @@ version: 1.0
 main: dev.malvaito.AstroCore
 author: Malvaito
 api-version: 1.21
+dependencies:
+  - PlaceholderAPI
 commands:
   eco:
   balance:
   pay:
   msg:
   r:
+  tpa:
+  tpahere:
+  tpaccept:
+  tpadeny:

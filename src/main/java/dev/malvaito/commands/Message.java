@@ -14,8 +14,8 @@ public class Message implements CommandExecutor {
 
     private final MiniMessage miniMessage;
 
-    public Message(AstroCore plugin) {
-        this.miniMessage = MiniMessage.miniMessage();
+    public Message(AstroCore plugin, MiniMessage miniMessage) {
+        this.miniMessage = miniMessage;
     }
 
     @Override
