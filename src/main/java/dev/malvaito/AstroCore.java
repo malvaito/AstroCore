@@ -5,8 +5,15 @@ import dev.malvaito.database.DatabaseManager;
 import dev.malvaito.listeners.PlayerJoinListener;
 import dev.malvaito.listeners.PlayerQuitListener;
 import dev.malvaito.commands.TPA;
+import dev.malvaito.commands.SetSpawnCommand;
+import dev.malvaito.commands.SpawnCommand;
 import dev.malvaito.tab.TabManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 public class AstroCore extends JavaPlugin {
 
@@ -20,6 +27,9 @@ public class AstroCore extends JavaPlugin {
         // Lógica de inicio del plugin
         this.databaseManager = DatabaseManager.getInstance();
 
+        // Cargar configuración
+        saveDefaultConfig();
+
         // Inicializa el TabManager
         this.tabManager = new TabManager(this);
         // Carga la configuración del tab
@@ -32,6 +42,22 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new dev.malvaito.listeners.TabPlayerJoinListener(this.tabManager), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
+        SpawnCommand spawnCommand = new SpawnCommand(this, miniMessage);
+        getServer().getPluginManager().registerEvents(new Listener() {
+            @EventHandler
+            public void onPlayerMove(PlayerMoveEvent event) {
+                if (event.hasChangedBlock()) {
+                    spawnCommand.cancelTeleport(event.getPlayer());
+                }
+            }
+
+            @EventHandler
+            public void onEntityDamage(EntityDamageEvent event) {
+                if (event.getEntity() instanceof Player) {
+                    spawnCommand.cancelTeleport((Player) event.getEntity());
+                }
+            }
+        }, this);
 
         // Registrar comandos
         getCommand("eco").setExecutor(new dev.malvaito.commands.Economy(this, databaseManager));
@@ -46,6 +72,8 @@ public class AstroCore extends JavaPlugin {
         getCommand("tpahere").setExecutor(tpaCommand);
         getCommand("tpadeny").setExecutor(tpaCommand);
         getCommand("tab").setExecutor(new dev.malvaito.commands.TabCommand(this));
+        getCommand("setspawn").setExecutor(new SetSpawnCommand(this, miniMessage));
+        getCommand("spawn").setExecutor(spawnCommand);
 
 
     }

@@ -16,3 +16,5 @@ commands:
   tpaccept:
   tpadeny:
   tab:
+  setspawn:
+  spawn:
