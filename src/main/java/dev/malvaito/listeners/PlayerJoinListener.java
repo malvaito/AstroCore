@@ -1,4 +1,4 @@
-package dev.malvaito.events;
+package dev.malvaito.listeners;
 
 import dev.malvaito.AstroCore;
 import dev.malvaito.database.DatabaseManager;
@@ -20,6 +20,7 @@ public class PlayerJoinListener implements Listener {
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        event.joinMessage(null);
         Player player = event.getPlayer();
         
         // Insertar o actualizar jugador en la tabla de stats
