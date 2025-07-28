@@ -7,3 +7,5 @@ commands:
   eco:
   balance:
   pay:
+  msg:
+  r:

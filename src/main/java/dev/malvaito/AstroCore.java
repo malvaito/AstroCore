@@ -21,6 +21,8 @@ public class AstroCore extends JavaPlugin {
         getCommand("eco").setExecutor(new dev.malvaito.commands.Economy(this, databaseManager));
         getCommand("balance").setExecutor(new dev.malvaito.commands.Balance(this, databaseManager));
         getCommand("pay").setExecutor(new dev.malvaito.commands.Pay(this, databaseManager));
+        getCommand("msg").setExecutor(new dev.malvaito.commands.Message(this));
+        getCommand("r").setExecutor(new dev.malvaito.commands.Reply(this));
     }
 
     @Override
