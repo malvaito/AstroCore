@@ -2,7 +2,6 @@ package dev.malvaito;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import dev.malvaito.commands.Economy;
 import dev.malvaito.database.DatabaseManager;
 import dev.malvaito.events.PlayerJoinListener;
 
@@ -19,8 +18,9 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, databaseManager), this);
 
         // Registrar comandos
-        getCommand("eco").setExecutor(new Economy(this, databaseManager));
+        getCommand("eco").setExecutor(new dev.malvaito.commands.Economy(this, databaseManager));
         getCommand("balance").setExecutor(new dev.malvaito.commands.Balance(this, databaseManager));
+        getCommand("pay").setExecutor(new dev.malvaito.commands.Pay(this, databaseManager));
     }
 
     @Override
