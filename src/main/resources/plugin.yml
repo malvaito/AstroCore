@@ -20,3 +20,6 @@ commands:
   setspawn:
   spawn:
   feed:
+  enderchest:
+    aliases:
+      - ec
