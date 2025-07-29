@@ -1,7 +1,6 @@
 package dev.malvaito.randomchest.scheduler;
 
 import dev.malvaito.randomchest.RandomChest;
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class RandomChestScheduler extends BukkitRunnable {

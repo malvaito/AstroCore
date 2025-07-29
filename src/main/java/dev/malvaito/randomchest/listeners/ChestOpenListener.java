@@ -6,6 +6,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
@@ -36,8 +37,11 @@ public class ChestOpenListener implements Listener {
                 if (chestManager.isActiveChest(chestLocationKey)) {
                     // Si el cofre no ha enviado el mensaje antes
                     if (!openedChests.contains(chestLocationKey)) {
-                        Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<green>A random chest has been opened!</green>"));
-                        openedChests.add(chestLocationKey); // Marcar como que ya envió el mensaje
+                        Location loc = event.getClickedBlock().getLocation();
+                        String message = String.format("<green>%s opened a random chest at X:%.0f Y:%.0f Z:%.0f!</green>", 
+                            event.getPlayer().getName(), loc.getX(), loc.getY(), loc.getZ());
+                        Bukkit.broadcast(MiniMessage.miniMessage().deserialize(message));
+                        openedChests.add(chestLocationKey);
                     }
                 }
             }

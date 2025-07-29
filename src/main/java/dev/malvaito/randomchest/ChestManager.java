@@ -5,7 +5,6 @@ import dev.malvaito.randomchest.util.ItemSerializer;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.configuration.ConfigurationSection;
@@ -18,8 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-// Comentario para forzar la recompilación
 
 public class ChestManager {
 
@@ -49,27 +46,6 @@ public class ChestManager {
         String randomChestType = chestTypes.get(random.nextInt(chestTypes.size()));
 
         createChestAtLocation(randomChestType, location);
-    }
-
-    private Location getRandomLocation() {
-        World world = Bukkit.getWorlds().get(0); // Obtener el primer mundo cargado
-        if (world == null) return null;
-
-        int spawnRadius = config.getConfig().getInt("spawn-radius", 100);
-        int centerX = world.getSpawnLocation().getBlockX();
-        int centerZ = world.getSpawnLocation().getBlockZ();
-
-        for (int i = 0; i < 10; i++) { // Intentar 10 veces encontrar una ubicación válida
-            int x = ThreadLocalRandom.current().nextInt(centerX - spawnRadius, centerX + spawnRadius + 1);
-            int z = ThreadLocalRandom.current().nextInt(centerZ - spawnRadius, centerZ + spawnRadius + 1);
-            int y = world.getHighestBlockYAt(x, z);
-
-            Location loc = new Location(world, x, y + 1, z); // +1 para que el cofre no esté dentro del bloque
-            if (loc.getBlock().getType() == Material.AIR && loc.clone().subtract(0,1,0).getBlock().getType().isSolid()) {
-                return loc;
-            }
-        }
-        return null;
     }
 
     private void fillChest(Chest chest, String chestTypeName) {

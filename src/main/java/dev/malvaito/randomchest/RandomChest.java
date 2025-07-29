@@ -62,11 +62,6 @@ public class RandomChest {
         int y = world.getHighestBlockYAt(x, z);
 
         Location spawnLocation = new Location(world, x, y, z);
-
-        // Crear el cofre aleatorio
-        // Create the random chest
         chestManager.createRandomChest(spawnLocation);
-
-        Bukkit.broadcastMessage("¡Un cofre aleatorio ha aparecido en X: " + x + ", Y: " + y + ", Z: " + z + "!");
     }
 }
