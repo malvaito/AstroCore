@@ -15,9 +15,6 @@ public class RandomChestScheduler extends BukkitRunnable {
     @Override
     public void run() {
         // Lógica para generar un cofre aleatorio
-        // Por ahora, solo un mensaje para confirmar que funciona
-        Bukkit.broadcastMessage("¡Un cofre aleatorio ha aparecido en algún lugar!");
-        // Aquí se debería llamar a un método de randomChest para generar un cofre
-        // Por ejemplo: randomChest.generateRandomChest();
+        randomChest.generateRandomChest();
     }
 }

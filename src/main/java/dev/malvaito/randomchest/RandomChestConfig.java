@@ -60,4 +60,8 @@ public class RandomChestConfig {
             this.plugin.saveResource("randomchest.yml", false);
         }
     }
+
+    public int getSpawnRadius() {
+        return getConfig().getInt("spawn-radius", 100); // Valor por defecto de 100 si no se encuentra
+    }
 }

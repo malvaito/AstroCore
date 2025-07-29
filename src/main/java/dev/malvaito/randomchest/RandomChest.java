@@ -1,6 +1,10 @@
 package dev.malvaito.randomchest;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Random;
 
 public class RandomChest {
 
@@ -37,5 +41,32 @@ public class RandomChest {
 
     public RandomChestConfig getChestConfig() {
         return config;
+    }
+
+    public void generateRandomChest() {
+        // Obtener el mundo principal (puedes ajustar esto si tienes múltiples mundos)
+        // Get the main world (adjust if you have multiple worlds)
+        org.bukkit.World world = Bukkit.getWorlds().get(0);
+        if (world == null) {
+            plugin.getLogger().warning("No se encontró ningún mundo para generar el cofre.");
+            return;
+        }
+
+        int spawnRadius = config.getSpawnRadius();
+        Random random = new Random();
+
+        // Generar coordenadas aleatorias dentro del radio
+        // Generate random coordinates within the radius
+        int x = random.nextInt(2 * spawnRadius) - spawnRadius;
+        int z = random.nextInt(2 * spawnRadius) - spawnRadius;
+        int y = world.getHighestBlockYAt(x, z);
+
+        Location spawnLocation = new Location(world, x, y, z);
+
+        // Crear el cofre aleatorio
+        // Create the random chest
+        chestManager.createRandomChest(spawnLocation);
+
+        Bukkit.broadcastMessage("¡Un cofre aleatorio ha aparecido en X: " + x + ", Y: " + y + ", Z: " + z + "!");
     }
 }

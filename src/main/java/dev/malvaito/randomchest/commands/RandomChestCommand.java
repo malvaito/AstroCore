@@ -71,7 +71,7 @@ public class RandomChestCommand implements CommandExecutor {
                     randomChest.getChestManager().createChestAtLocation(spawnChestName, player.getLocation());
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Chest of type '</green><gold>" + spawnChestName + "</gold><green>' spawned at your location.</green>"));
                 } else if (spawnType.equals("random")) {
-                    randomChest.getChestManager().createRandomChest(spawnChestName);
+                    randomChest.generateRandomChest();
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Chest of type '</green><gold>" + spawnChestName + "</gold><green>' spawned at a random location.</green>"));
                 } else {
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Invalid spawn type. Usage: /randomchest spawn <chest_name> <here|random></red>"));

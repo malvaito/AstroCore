@@ -36,24 +36,19 @@ public class ChestManager {
         startChestCleanupTask();
     }
 
-    public void createRandomChest(String chestTypeName) {
-        Location randomLoc = getRandomLocation();
-        if (randomLoc == null) {
-            plugin.getLogger().warning("Could not find a valid location for the chest.");
+    public void createRandomChest(Location location) {
+        // Obtener todos los tipos de cofres definidos en la configuración
+        // Get all chest types defined in the configuration
+        ConfigurationSection chestsSection = config.getConfig().getConfigurationSection("chests");
+        if (chestsSection == null || chestsSection.getKeys(false).isEmpty()) {
+            plugin.getLogger().warning("No chest types defined in randomchest.yml");
             return;
         }
 
-        Block block = randomLoc.getBlock();
-        block.setType(Material.CHEST);
+        List<String> chestTypes = new java.util.ArrayList<>(chestsSection.getKeys(false));
+        String randomChestType = chestTypes.get(random.nextInt(chestTypes.size()));
 
-        if (block.getState() instanceof Chest) {
-            Chest chest = (Chest) block.getState();
-            fillChest(chest, chestTypeName);
-            activeChests.put(randomLoc.getBlockX() + "," + randomLoc.getBlockY() + "," + randomLoc.getBlockZ(), System.currentTimeMillis()); // Registrar el cofre activo
-
-        } else {
-            plugin.getLogger().warning("The block at the random location is not a chest.");
-        }
+        createChestAtLocation(randomChestType, location);
     }
 
     private Location getRandomLocation() {
