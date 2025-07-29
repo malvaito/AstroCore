@@ -1,4 +1,4 @@
-package dev.malvaito.randomchest.commands;
+package dev.malvaito.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

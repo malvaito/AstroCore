@@ -114,7 +114,7 @@ public class TPA implements CommandExecutor, Listener {
                 tpaRequests.put(target.getUniqueId(), player.getUniqueId());
                 player.sendMessage(plugin.miniMessage.deserialize("<green>You have sent a teleport request to <gold>" + target.getName() + "</gold>.</green>"));
                 target.sendMessage(plugin.miniMessage.deserialize("<gold>" + player.getName() + "</gold> has sent you a teleport request. Use <green>/tpaccept</green> to accept or <red>/tpadeny</red> to deny."));
-                cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (60 * 1000)); // 1 minute cooldown
+                cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (60 * 1000));
             } else {
                 player.sendMessage(plugin.miniMessage.deserialize("<red>Player not found or is not online.</red>"));
             }
@@ -141,9 +141,9 @@ public class TPA implements CommandExecutor, Listener {
                     }
                     teleportTasks.remove(requester.getUniqueId());
                     playerLocations.remove(requester.getUniqueId());
-                }, 20L * 5)); // 5 seconds
+                }, 20L * 5));
 
-                cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (5 * 1000)); // 5 seconds cooldown
+                cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (5 * 1000));
             } else {
                 player.sendMessage(plugin.miniMessage.deserialize("<red>The player who sent the request is no longer online.</red>"));
             }
@@ -184,7 +184,7 @@ public class TPA implements CommandExecutor, Listener {
                 tpaRequests.put(target.getUniqueId(), player.getUniqueId());
                 player.sendMessage(plugin.miniMessage.deserialize("<green>You have sent a request for <gold>" + target.getName() + "</gold> to teleport to you.</green>"));
                 target.sendMessage(plugin.miniMessage.deserialize("<gold>" + player.getName() + "</gold> has sent you a request to teleport to them. Use <green>/tpaccept</green> to accept or <red>/tpadeny</red> to deny.</green>"));
-                cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (60 * 1000)); // 1 minute cooldown
+                cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (60 * 1000));
             } else {
                 player.sendMessage(plugin.miniMessage.deserialize("<red>Player not found or is not online.</red>"));
             }

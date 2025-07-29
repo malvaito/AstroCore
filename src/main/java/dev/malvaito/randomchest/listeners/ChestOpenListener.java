@@ -27,7 +27,7 @@ public class ChestOpenListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null) return;
 
-        // Solo procesar si es un click derecho en un bloque
+        
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
         if (event.getClickedBlock().getType() == Material.CHEST) {
@@ -35,7 +35,7 @@ public class ChestOpenListener implements Listener {
                 String chestLocationKey = chestManager.getLocationKey(event.getClickedBlock().getLocation());
 
                 if (chestManager.isActiveChest(chestLocationKey)) {
-                    // Si el cofre no ha enviado el mensaje antes
+                    
                     if (!openedChests.contains(chestLocationKey)) {
                         Location loc = event.getClickedBlock().getLocation();
                         String message = String.format("<green>%s opened a random chest at X:%.0f Y:%.0f Z:%.0f!</green>", 

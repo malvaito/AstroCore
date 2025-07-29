@@ -24,21 +24,21 @@ public class TabManager {
     }
 
     public void updatePlayerTab(Player player) {
-        // Actualiza el encabezado y pie de página del tab para un jugador
+
         Component header = miniMessage.deserialize(tabConfig.getHeader());
         Component footer = miniMessage.deserialize(tabConfig.getFooter());
 
         player.sendPlayerListHeader(header);
         player.sendPlayerListFooter(footer);
 
-        // Actualiza el formato del nombre del jugador en la lista del tab
+
         String formattedName = tabConfig.getTabFormat();
         formattedName = PlaceholderAPI.setPlaceholders(player, formattedName);
         player.playerListName(miniMessage.deserialize(formattedName));
     }
 
     public void updateAllPlayersTab() {
-        // Actualiza el encabezado y pie de página del tab para todos los jugadores
+
         for (Player player : plugin.getServer().getOnlinePlayers()) {
             updatePlayerTab(player);
         }

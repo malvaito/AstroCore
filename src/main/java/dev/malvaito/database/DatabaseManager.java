@@ -9,7 +9,7 @@ public class DatabaseManager {
     private static DatabaseManager instance;
 
     private DatabaseManager() {
-        // Constructor privado para el patrón Singleton
+
     }
 
     private Connection databaseConnection;
@@ -35,7 +35,6 @@ public class DatabaseManager {
     private void createDatabaseTables() {
         if (databaseConnection == null) return;
 
-        // SQL para la tabla de stats
         String statsTableSQL = "CREATE TABLE IF NOT EXISTS stats (" +
                 "player_uuid VARCHAR(36) PRIMARY KEY," +
                 "player_nickname VARCHAR(16) NOT NULL," +
@@ -51,7 +50,6 @@ public class DatabaseManager {
                 "votes INT DEFAULT 0" +
                 ");";
 
-        // SQL para la tabla de homes
         String homesTableSQL = "CREATE TABLE IF NOT EXISTS homes (" +
                 "home_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "player_uuid VARCHAR(36) NOT NULL," +
@@ -65,7 +63,6 @@ public class DatabaseManager {
                 "UNIQUE(player_uuid, home_name)" +
                 ");";
 
-        // SQL para la tabla de stones
         String protectionStonesTableSQL = "CREATE TABLE IF NOT EXISTS protection_stones (" +
                 "stone_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "owner_uuid VARCHAR(36) NOT NULL," +
@@ -79,7 +76,6 @@ public class DatabaseManager {
                 "UNIQUE(world, x, y, z)" +
                 ");";
 
-        // SQL para la tabla de stone members
         String protectionStonesMembersTableSQL = "CREATE TABLE IF NOT EXISTS protection_stones_members (" +
                 "member_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "player_uuid VARCHAR(36) NOT NULL," +
@@ -89,7 +85,7 @@ public class DatabaseManager {
                 "UNIQUE(player_uuid, stone_id)" +
                 ");";
 
-        // SQL para la tabla de economía
+        
         String economyTableSQL = "CREATE TABLE IF NOT EXISTS economy (" +
                 "player_uuid VARCHAR(36) PRIMARY KEY," +
                 "player_nickname VARCHAR(16) NOT NULL," +
@@ -125,7 +121,7 @@ public class DatabaseManager {
     public Connection getDatabaseConnection() {
         try {
             if (databaseConnection == null || databaseConnection.isClosed()) {
-                establishConnection(); // Re-establish connection if it's closed or null
+                establishConnection(); 
             }
         } catch (SQLException e) {
             System.err.println("Error checking database connection status: " + e.getMessage());

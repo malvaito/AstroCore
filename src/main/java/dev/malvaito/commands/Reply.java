@@ -48,7 +48,7 @@ public class Reply implements CommandExecutor {
         Player targetPlayer = Bukkit.getPlayer(targetUUID);
         if (targetPlayer == null || !targetPlayer.isOnline()) {
             player.sendMessage(miniMessage.deserialize("<red>The player you are trying to reply to is no longer online.</red>"));
-            lastMessaged.remove(player.getUniqueId()); // Clear the last messaged player if they are offline
+            lastMessaged.remove(player.getUniqueId());
             return true;
         }
 
@@ -61,7 +61,7 @@ public class Reply implements CommandExecutor {
         player.sendMessage(miniMessage.deserialize("<gray>[<white>You</white> -> <yellow>" + targetPlayer.getName() + "</yellow>] <reset>" + message + "</reset>"));
         targetPlayer.sendMessage(miniMessage.deserialize("<gray>[<yellow>" + player.getName() + "</yellow> -> <white>You</white>] <reset>" + message + "</reset>"));
 
-        // Update last messaged for both players
+        
         setLastMessaged(player.getUniqueId(), targetPlayer.getUniqueId());
 
         return true;

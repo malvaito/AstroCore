@@ -62,6 +62,6 @@ public class RandomChestConfig {
     }
 
     public int getSpawnRadius() {
-        return getConfig().getInt("spawn-radius", 100); // Valor por defecto de 100 si no se encuentra
+        return getConfig().getInt("spawn-radius", 100);
     }
 }

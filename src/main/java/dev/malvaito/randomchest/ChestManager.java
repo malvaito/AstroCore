@@ -34,8 +34,8 @@ public class ChestManager {
     }
 
     public void createRandomChest(Location location) {
-        // Obtener todos los tipos de cofres definidos en la configuración
-        // Get all chest types defined in the configuration
+
+        
         ConfigurationSection chestsSection = config.getConfig().getConfigurationSection("chests");
         if (chestsSection == null || chestsSection.getKeys(false).isEmpty()) {
             plugin.getLogger().warning("No chest types defined in randomchest.yml");
@@ -83,8 +83,8 @@ public class ChestManager {
         if (block.getState() instanceof Chest) {
             Chest chest = (Chest) block.getState();
             fillChest(chest, chestTypeName);
-            activeChests.put(location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ(), System.currentTimeMillis()); // Registrar el cofre activo
-            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<green>A chest of type '</green><gold>" + chestTypeName + "</gold><green>' has appeared at X: <gold>" + location.getBlockX() + "</gold>, Y: <gold>" + location.getBlockY() + "</gold>, Z: <gold>" + location.getBlockZ() + "</gold>!</green>"));
+            activeChests.put(location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ(), System.currentTimeMillis());
+             Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<green>A chest of type '</green><gold>" + chestTypeName + "</gold><green>' has appeared at X: <gold>" + location.getBlockX() + "</gold>, Y: <gold>" + location.getBlockY() + "</gold>, Z: <gold>" + location.getBlockZ() + "</gold>!</green>"));
         } else {
             plugin.getLogger().warning("The block at the specified location is not a chest.");
         }
@@ -121,29 +121,25 @@ public class ChestManager {
                     String[] coords = locString.split(",");
                     if (coords.length != 3) {
                         plugin.getLogger().warning("Invalid location string in activeChests: " + locString);
-                        return true;
-                    }
-                    Location loc = new Location(Bukkit.getWorlds().get(0), Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2]));
+                        return true;}
+                     Location loc = new Location(Bukkit.getWorlds().get(0), Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2]));
 
                     Block block = loc.getBlock();
                     if (block.getState() instanceof Chest) {
                         Chest chest = (Chest) block.getState();
                         if (chest.getInventory().isEmpty()) {
-                            if (currentTime - creationTime >= 10 * 60 * 1000) { // 10 minutos en milisegundos
+                            if (currentTime - creationTime >= 10 * 60 * 1000) { 
                                 removeChest(loc);
-                                return true;
-                            }
-                        } else {
-                            // Si el cofre tiene items, reiniciar el contador
-                            activeChests.put(locString, currentTime);
-                        }
-                    } else {
-                        // Si el bloque ya no es un cofre (ej. fue roto), eliminarlo del registro
-                        return true;
+                             }
+                         } else {
+                             activeChests.put(locString, currentTime);
+                         }
+                     } else {
+                         return true;
                     }
                     return false;
                 });
             }
-        }.runTaskTimer(plugin, 20 * 60, 20 * 60); // Ejecutar cada minuto (20 ticks * 60 segundos)
+        }.runTaskTimer(plugin, 20 * 60, 20 * 60);
     }
 }

@@ -1,9 +1,9 @@
 # Configuración de RandomChest
 
-# Radio de aparición de los cofres aleatorios
+
 spawn-radius: 100
 
-# Definición de los cofres disponibles
+
 chests:
   example_chest_1:
     items:

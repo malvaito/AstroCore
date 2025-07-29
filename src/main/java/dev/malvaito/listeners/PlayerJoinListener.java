@@ -23,7 +23,7 @@ public class PlayerJoinListener implements Listener {
         event.joinMessage(null);
         Player player = event.getPlayer();
         
-        // Insertar o actualizar jugador en la tabla de stats
+
         String query = "INSERT INTO stats (player_uuid, player_nickname) VALUES (?, ?) " +
                        "ON CONFLICT(player_uuid) DO UPDATE SET player_nickname=excluded.player_nickname;";
         
@@ -36,7 +36,7 @@ public class PlayerJoinListener implements Listener {
             e.printStackTrace();
         }
 
-        // Insertar o actualizar jugador en la tabla de economy
+
         String economyQuery = "INSERT INTO economy (player_uuid, player_nickname, balance, total_spent, total_received, total_earned) VALUES (?, ?, ?, ?, ?, ?) " +
                               "ON CONFLICT(player_uuid) DO UPDATE SET player_nickname=excluded.player_nickname;";
 

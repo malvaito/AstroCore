@@ -29,7 +29,7 @@ public class ChestAddItemGUI implements Listener {
         this.chestName = chestName;
         this.inventory = Bukkit.createInventory(null, 27, MiniMessage.miniMessage().deserialize("<gold>Add Items to </gold><green>" + chestName + "</green>"));
 
-        // Cargar ítems existentes en la GUI
+        
         List<String> existingItems = randomChest.getChestConfig().getConfig().getStringList("chests." + chestName + ".items");
         for (String itemString : existingItems) {
             try {
@@ -49,7 +49,7 @@ public class ChestAddItemGUI implements Listener {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         if (event.getInventory().equals(inventory)) {
-            // Desregistrar el listener para evitar múltiples llamadas
+            
             InventoryCloseEvent.getHandlerList().unregister(this);
 
             List<String> newItems = new ArrayList<>();

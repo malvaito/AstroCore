@@ -13,7 +13,7 @@ public class RandomChestScheduler extends BukkitRunnable {
 
     @Override
     public void run() {
-        // Lógica para generar un cofre aleatorio
+        
         randomChest.generateRandomChest();
     }
 }

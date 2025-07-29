@@ -71,7 +71,7 @@ public class Pay implements CommandExecutor {
             return true;
         }
 
-        // Perform the transaction
+        
         updatePlayerBalance(player, -amount, "pay_sent");
         updatePlayerBalance(targetPlayer, amount, "pay_received");
 
@@ -121,15 +121,15 @@ public class Pay implements CommandExecutor {
             try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                 updateStmt.setString(1, player.getUniqueId().toString());
                 updateStmt.setString(2, player.getName());
-                updateStmt.setDouble(3, amount); // Initial balance if new
-                updateStmt.setDouble(4, type.equals("pay_sent") ? amount : 0.0); // total_spent
-                updateStmt.setDouble(5, type.equals("pay_received") ? amount : 0.0); // total_received
-                updateStmt.setDouble(6, type.equals("pay_received") ? amount : 0.0); // total_earned
+                updateStmt.setDouble(3, amount); 
+                updateStmt.setDouble(4, type.equals("pay_sent") ? amount : 0.0);
+                updateStmt.setDouble(5, type.equals("pay_received") ? amount : 0.0); 
+                updateStmt.setDouble(6, type.equals("pay_received") ? amount : 0.0); 
 
-                updateStmt.setDouble(7, amount); // For ON CONFLICT UPDATE balance
-                updateStmt.setDouble(8, type.equals("pay_sent") ? amount : 0.0); // For ON CONFLICT UPDATE total_spent
-                updateStmt.setDouble(9, type.equals("pay_received") ? amount : 0.0); // For ON CONFLICT UPDATE total_received
-                updateStmt.setDouble(10, type.equals("pay_received") ? amount : 0.0); // For ON CONFLICT UPDATE total_earned
+                updateStmt.setDouble(7, amount); 
+                updateStmt.setDouble(8, type.equals("pay_sent") ? amount : 0.0); 
+                updateStmt.setDouble(9, type.equals("pay_received") ? amount : 0.0);
+                updateStmt.setDouble(10, type.equals("pay_received") ? amount : 0.0); 
 
                 updateStmt.executeUpdate();
             }

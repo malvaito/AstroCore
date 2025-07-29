@@ -8,13 +8,7 @@ import java.io.IOException;
 
 public class ItemSerializer {
 
-    /**
-     * Serializa un ItemStack a una cadena Base64.
-     *
-     * @param itemStack El ItemStack a serializar.
-     * @return La cadena Base64 que representa el ItemStack.
-     * @throws IllegalStateException Si ocurre un error de E/S durante la serialización.
-     */
+
     public static String itemStackToBase64(ItemStack itemStack) throws IllegalStateException {
         try {
             YamlConfiguration config = new YamlConfiguration();
@@ -25,13 +19,7 @@ public class ItemSerializer {
         }
     }
 
-    /**
-     * Deserializa una cadena Base64 a un ItemStack.
-     *
-     * @param data La cadena Base64 a deserializar.
-     * @return El ItemStack deserializado.
-     * @throws IOException Si ocurre un error de E/S durante la deserialización.
-     */
+
     public static ItemStack itemStackFromBase64(String data) throws IOException {
         try {
             String yamlString = new String(Base64Coder.decodeLines(data));

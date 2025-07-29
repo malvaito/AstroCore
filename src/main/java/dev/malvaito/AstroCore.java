@@ -28,28 +28,28 @@ public class AstroCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Inicializar RandomChest
+
         this.randomChest = new RandomChest(this);
         this.randomChest.onEnable();
 
-        // Programar la aparición de cofres aleatorios cada 1 hora y 15 minutos (90000 ticks)
+
         new RandomChestScheduler(this.randomChest).runTaskTimer(this, 0L, 90000L);
 
         this.miniMessage = MiniMessage.miniMessage();
-        // Lógica de inicio del plugin
+
         this.databaseManager = DatabaseManager.getInstance();
 
-        // Cargar configuración
+
         saveDefaultConfig();
 
-        // Inicializa el TabManager
+
         this.tabManager = new TabManager(this);
-        // Carga la configuración del tab
+
         this.tabManager.loadConfig();
-        // Actualiza el tab para todos los jugadores online
+
         this.tabManager.updateAllPlayersTab();
 
-        // Registrar eventos
+
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, databaseManager), this);
         getServer().getPluginManager().registerEvents(new dev.malvaito.listeners.TabPlayerJoinListener(this.tabManager), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
@@ -72,7 +72,7 @@ public class AstroCore extends JavaPlugin {
             }
         }, this);
 
-        // Registrar comandos
+
         getCommand("eco").setExecutor(new dev.malvaito.commands.Economy(this, databaseManager));
         getCommand("balance").setExecutor(new dev.malvaito.commands.Balance(this, databaseManager));
         getCommand("pay").setExecutor(new dev.malvaito.commands.Pay(this, databaseManager));
@@ -88,9 +88,9 @@ public class AstroCore extends JavaPlugin {
         getCommand("setspawn").setExecutor(new SetSpawnCommand(this, miniMessage));
         getCommand("spawn").setExecutor(spawnCommand);
 
-        // Registrar comandos de RandomChest
-        getCommand("randomchest").setExecutor(new dev.malvaito.randomchest.commands.RandomChestCommand(this, this.randomChest));
-        getCommand("randomchest").setTabCompleter(new dev.malvaito.randomchest.commands.RandomChestTabCompleter(this.randomChest));
+
+        getCommand("randomchest").setExecutor(new dev.malvaito.commands.RandomChestCommand(this, this.randomChest));
+
 
 
 
@@ -98,9 +98,9 @@ public class AstroCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Lógica de apagado del plugin
+
         this.databaseManager.closeConnection();
-        // Deshabilitar RandomChest
+
         this.randomChest.onDisable();
     }
 

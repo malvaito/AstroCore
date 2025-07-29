@@ -89,7 +89,7 @@ public class SpawnCommand implements CommandExecutor {
                     countdown--;
                 }
             }
-        }.runTaskTimer(plugin, 0L, 20L); // 20 ticks = 1 second
+        }.runTaskTimer(plugin, 0L, 20L);
 
         return true;
     }

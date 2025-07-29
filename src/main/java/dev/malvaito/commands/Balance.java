@@ -35,11 +35,9 @@ public class Balance implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length == 0) {
-            // Comando /balance
             double balance = getPlayerBalance(player.getUniqueId().toString());
             player.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Your balance: <green>" + balance + "</green> coins.</gold>"));
         } else if (args.length == 1) {
-            // Comando /balance <player>
             if (!player.hasPermission("astrocore.balance.other")) {
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You don't have permission to view other players' balances.</red>"));
                 return true;
