@@ -14,15 +14,23 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
+import dev.malvaito.randomchest.RandomChest;
+import dev.malvaito.randomchest.listeners.ChestOpenListener;
+
 
 public class AstroCore extends JavaPlugin {
 
     private DatabaseManager databaseManager;
     public MiniMessage miniMessage;
     private TabManager tabManager;
+    private RandomChest randomChest;
 
     @Override
     public void onEnable() {
+        // Inicializar RandomChest
+        this.randomChest = new RandomChest(this);
+        this.randomChest.onEnable();
+
         this.miniMessage = MiniMessage.miniMessage();
         // Lógica de inicio del plugin
         this.databaseManager = DatabaseManager.getInstance();
@@ -41,6 +49,7 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, databaseManager), this);
         getServer().getPluginManager().registerEvents(new dev.malvaito.listeners.TabPlayerJoinListener(this.tabManager), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+        getServer().getPluginManager().registerEvents(new ChestOpenListener(this.randomChest.getChestManager()), this);
 
         SpawnCommand spawnCommand = new SpawnCommand(this, miniMessage);
         getServer().getPluginManager().registerEvents(new Listener() {
@@ -75,6 +84,11 @@ public class AstroCore extends JavaPlugin {
         getCommand("setspawn").setExecutor(new SetSpawnCommand(this, miniMessage));
         getCommand("spawn").setExecutor(spawnCommand);
 
+        // Registrar comandos de RandomChest
+        getCommand("randomchest").setExecutor(new dev.malvaito.randomchest.commands.RandomChestCommand(this, this.randomChest));
+        getCommand("randomchest").setTabCompleter(new dev.malvaito.randomchest.commands.RandomChestTabCompleter(this.randomChest));
+
+
 
     }
 
@@ -82,6 +96,8 @@ public class AstroCore extends JavaPlugin {
     public void onDisable() {
         // Lógica de apagado del plugin
         this.databaseManager.closeConnection();
+        // Deshabilitar RandomChest
+        this.randomChest.onDisable();
     }
 
     public TabManager getTabManager() {

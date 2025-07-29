@@ -1,0 +1,17 @@
+# Configuración de RandomChest
+
+# Radio de aparición de los cofres aleatorios
+spawn-radius: 100
+
+# Definición de los cofres disponibles
+chests:
+  example_chest_1:
+    items:
+      - 'DIAMOND 1'
+      - 'IRON_INGOT 5'
+    random-slots: true
+  example_chest_2:
+    items:
+      - 'GOLD_INGOT 3'
+      - 'EMERALD 1'
+    random-slots: false
