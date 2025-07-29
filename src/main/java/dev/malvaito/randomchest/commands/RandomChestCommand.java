@@ -7,13 +7,16 @@ import dev.malvaito.randomchest.util.ItemSerializer;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import dev.malvaito.randomchest.RandomChest;
+import dev.malvaito.randomchest.gui.ChestAddItemGUI;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class RandomChestCommand implements CommandExecutor {
 
+    private final JavaPlugin plugin;
     private final RandomChest randomChest;
 
     public RandomChestCommand(JavaPlugin plugin, RandomChest randomChest) {
+        this.plugin = plugin;
         this.randomChest = randomChest;
     }
 
@@ -111,8 +114,9 @@ public class RandomChestCommand implements CommandExecutor {
                     randomChest.getChestConfig().saveConfig();
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Item added to chest '</green><gold>" + targetChestName + "</gold><green>' from your hand.</green>"));
                 } else if (addType.equals("gui")) {
-                    // Lógica para abrir un GUI y añadir items
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>'gui' functionality is not yet implemented.</red>"));
+                    ChestAddItemGUI gui = new dev.malvaito.randomchest.gui.ChestAddItemGUI(plugin, randomChest, targetChestName);
+                    gui.open(player);
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Opening GUI for chest '</green><gold>" + targetChestName + "</gold><green>'.</green>"));
                 } else {
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Invalid add type. Usage: /randomchest additem <chest_name> <hand|gui></red>"));
                 }

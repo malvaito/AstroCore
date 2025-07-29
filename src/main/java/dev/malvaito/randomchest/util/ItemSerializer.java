@@ -21,7 +21,7 @@ public class ItemSerializer {
     public static String itemStackToBase64(ItemStack itemStack) throws IllegalStateException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream)
+            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
 
             dataOutput.writeObject(itemStack);
 

@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 import dev.malvaito.randomchest.RandomChest;
 import dev.malvaito.randomchest.listeners.ChestOpenListener;
+import dev.malvaito.randomchest.scheduler.RandomChestScheduler;
 
 
 public class AstroCore extends JavaPlugin {
@@ -30,6 +31,9 @@ public class AstroCore extends JavaPlugin {
         // Inicializar RandomChest
         this.randomChest = new RandomChest(this);
         this.randomChest.onEnable();
+
+        // Programar la aparición de cofres aleatorios cada 1 hora y 15 minutos (90000 ticks)
+        new RandomChestScheduler(this.randomChest).runTaskTimer(this, 0L, 90000L);
 
         this.miniMessage = MiniMessage.miniMessage();
         // Lógica de inicio del plugin
