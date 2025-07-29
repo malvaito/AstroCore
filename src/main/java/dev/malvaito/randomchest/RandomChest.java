@@ -46,7 +46,7 @@ public class RandomChest {
     public void generateRandomChest() {
         org.bukkit.World world = Bukkit.getWorlds().get(0);
         if (world == null) {
-            plugin.getLogger().warning("No se encontró ningún mundo para generar el cofre.");
+            plugin.getLogger().warning("No world found to generate the chest.");
             return;
         }
 

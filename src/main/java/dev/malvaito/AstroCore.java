@@ -87,6 +87,7 @@ public class AstroCore extends JavaPlugin {
         getCommand("tab").setExecutor(new dev.malvaito.commands.TabCommand(this));
         getCommand("setspawn").setExecutor(new SetSpawnCommand(this, miniMessage));
         getCommand("spawn").setExecutor(spawnCommand);
+        getCommand("feed").setExecutor(new dev.malvaito.commands.Feed());
 
 
         getCommand("randomchest").setExecutor(new dev.malvaito.commands.RandomChestCommand(this, this.randomChest));

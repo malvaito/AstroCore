@@ -1,8 +1,4 @@
-# Configuración de RandomChest
-
-
 spawn-radius: 100
-
 
 chests:
   example_chest_1:
