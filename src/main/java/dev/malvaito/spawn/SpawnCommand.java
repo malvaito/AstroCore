@@ -1,4 +1,4 @@
-package dev.malvaito.commands;
+package dev.malvaito.spawn;
 
 import dev.malvaito.AstroCore;
 import net.kyori.adventure.text.minimessage.MiniMessage;

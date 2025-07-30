@@ -1,11 +1,10 @@
-package dev.malvaito.commands;
+package dev.malvaito.randomchest.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import dev.malvaito.randomchest.util.ItemSerializer;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-
 import dev.malvaito.randomchest.RandomChest;
 import dev.malvaito.randomchest.gui.ChestAddItemGUI;
 import org.bukkit.plugin.java.JavaPlugin;

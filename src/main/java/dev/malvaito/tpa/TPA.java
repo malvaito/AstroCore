@@ -1,4 +1,4 @@
-package dev.malvaito.commands;
+package dev.malvaito.tpa;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
