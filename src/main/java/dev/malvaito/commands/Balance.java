@@ -28,7 +28,7 @@ public class Balance implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Only players can use this command.</red>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Solo los jugadores pueden usar este comando.</red>"));
             return true;
         }
 
@@ -36,7 +36,7 @@ public class Balance implements CommandExecutor {
 
         if (args.length == 0) {
             double balance = getPlayerBalance(player.getUniqueId().toString());
-            player.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Your balance: <green>" + balance + "</green> coins.</gold>"));
+            player.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Tu saldo: <green>" + balance + "</green> monedas.</gold>"));
         } else if (args.length == 1) {
             if (!player.hasPermission("astrocore.balance.other")) {
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You don't have permission to view other players' balances.</red>"));

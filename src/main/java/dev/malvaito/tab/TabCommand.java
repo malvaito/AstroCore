@@ -22,13 +22,13 @@ public class TabCommand implements CommandExecutor {
             if (sender.hasPermission("astrocore.tab.reload")) {
                 plugin.getTabManager().loadConfig();
                 plugin.getTabManager().updateAllPlayersTab();
-                sender.sendMessage(miniMessage.deserialize("<green>Tab configuration reloaded successfully!</green>"));
+                sender.sendMessage(miniMessage.deserialize("<green>¡Configuración de la pestaña recargada exitosamente!</green>"));
             } else {
-                sender.sendMessage(miniMessage.deserialize("<red>You don't have permission to use this command.</red>"));
+                sender.sendMessage(miniMessage.deserialize("<red>No tienes permiso para usar este comando.</red>"));
             }
             return true;
         }
-        sender.sendMessage(miniMessage.deserialize("<red>Usage: /tab reload</red>"));
+        sender.sendMessage(miniMessage.deserialize("<red>Uso: /tab reload</red>"));
         return true;
     }
 }

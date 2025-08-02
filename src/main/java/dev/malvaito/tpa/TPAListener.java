@@ -10,6 +10,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.UUID;
 
+/**
+ * @author Malvaito
+ */
 public class TPAListener implements Listener {
 
     private final AstroCore plugin;
@@ -28,7 +31,7 @@ public class TPAListener implements Listener {
             Location to = event.getTo();
             if (from != null && to != null && (from.getBlockX() != to.getBlockX() || from.getBlockY() != to.getBlockY() || from.getBlockZ() != to.getBlockZ())) {
                 tpaManager.cancelTeleport(playerId);
-                event.getPlayer().sendMessage(plugin.miniMessage.deserialize("<red>Teleport cancelled: You moved!</red>"));
+                event.getPlayer().sendMessage(plugin.miniMessage.deserialize("<red>Teletransporte cancelado: ¡Te moviste!</red>"));
             }
         }
     }
@@ -40,7 +43,7 @@ public class TPAListener implements Listener {
             UUID playerId = player.getUniqueId();
             if (tpaManager.getTeleportTasks().containsKey(playerId)) {
                 tpaManager.cancelTeleport(playerId);
-                player.sendMessage(plugin.miniMessage.deserialize("<red>Teleport cancelled: You took damage!</red>"));
+                player.sendMessage(plugin.miniMessage.deserialize("<red>Teletransporte cancelado: ¡Recibiste daño!</red>"));
             }
         }
     }

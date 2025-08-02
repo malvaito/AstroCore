@@ -84,7 +84,7 @@ public class ChestManager {
             Chest chest = (Chest) block.getState();
             fillChest(chest, chestTypeName);
             activeChests.put(location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ(), System.currentTimeMillis());
-             Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<green>A chest of type '</green><gold>" + chestTypeName + "</gold><green>' has appeared at X: <gold>" + location.getBlockX() + "</gold>, Y: <gold>" + location.getBlockY() + "</gold>, Z: <gold>" + location.getBlockZ() + "</gold>!</green>"));
+             Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<green>¡Un cofre de tipo '</green><gold>" + chestTypeName + "</gold><green>' ha aparecido en X: <gold>" + location.getBlockX() + "</gold>, Y: <gold>" + location.getBlockY() + "</gold>, Z: <gold>" + location.getBlockZ() + "</gold>!</green>"));
         } else {
             plugin.getLogger().warning("The block at the specified location is not a chest.");
         }

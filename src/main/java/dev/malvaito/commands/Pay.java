@@ -30,20 +30,20 @@ public class Pay implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(miniMessage.deserialize("<red>Only players can use this command.</red>"));
+            sender.sendMessage(miniMessage.deserialize("<red>Solo los jugadores pueden usar este comando.</red>"));
             return true;
         }
 
         Player player = (Player) sender;
 
         if (args.length < 2) {
-            player.sendMessage(miniMessage.deserialize("<red>Usage: /pay <player> <amount></red>"));
+            player.sendMessage(miniMessage.deserialize("<red>Uso: /pay <jugador> <cantidad></red>"));
             return true;
         }
 
         OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[0]);
         if (!targetPlayer.hasPlayedBefore() && !targetPlayer.isOnline()) {
-            player.sendMessage(miniMessage.deserialize("<red>Player not found.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>Jugador no encontrado.</red>"));
             return true;
         }
 
@@ -51,23 +51,23 @@ public class Pay implements CommandExecutor {
         try {
             amount = Double.parseDouble(args[1]);
         } catch (NumberFormatException e) {
-            player.sendMessage(miniMessage.deserialize("<red>Invalid amount.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>Cantidad inválida.</red>"));
             return true;
         }
 
         if (amount <= 0) {
-            player.sendMessage(miniMessage.deserialize("<red>Amount must be positive.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>La cantidad debe ser positiva.</red>"));
             return true;
         }
 
         if (player.getUniqueId().equals(targetPlayer.getUniqueId())) {
-            player.sendMessage(miniMessage.deserialize("<red>You cannot pay yourself.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>No puedes pagarte a ti mismo.</red>"));
             return true;
         }
 
         double playerBalance = getPlayerBalance(player.getUniqueId().toString());
         if (playerBalance < amount) {
-            player.sendMessage(miniMessage.deserialize("<red>You don't have enough money.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>No tienes suficiente dinero.</red>"));
             return true;
         }
 
@@ -75,9 +75,9 @@ public class Pay implements CommandExecutor {
         updatePlayerBalance(player, -amount, "pay_sent");
         updatePlayerBalance(targetPlayer, amount, "pay_received");
 
-        player.sendMessage(miniMessage.deserialize("<green>You paid <yellow>" + targetPlayer.getName() + "</yellow> <gold>" + String.format("%.2f", amount) + "</gold> coins.</green>"));
+        player.sendMessage(miniMessage.deserialize("<green>Pagaste <yellow>" + targetPlayer.getName() + "</yellow> <gold>" + String.format("%.2f", amount) + "</gold> monedas.</green>"));
         if (targetPlayer.isOnline()) {
-            targetPlayer.getPlayer().sendMessage(miniMessage.deserialize("<green>You received <gold>" + String.format("%.2f", amount) + "</gold> coins from <yellow>" + player.getName() + ".</yellow></green>"));
+            targetPlayer.getPlayer().sendMessage(miniMessage.deserialize("<green>Recibiste <gold>" + String.format("%.2f", amount) + "</gold> monedas de <yellow>" + player.getName() + ".</yellow></green>"));
         }
 
         return true;

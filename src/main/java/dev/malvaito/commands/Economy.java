@@ -51,12 +51,12 @@ public class Economy implements CommandExecutor {
     }
 
     private void sendUsage(CommandSender sender) {
-        sender.sendMessage(miniMessage.deserialize("<red>Usage: /eco <give|set|take> <player> <amount></red>"));
+        sender.sendMessage(miniMessage.deserialize("<red>Uso: /eco <dar|establecer|quitar> <jugador> <cantidad></red>"));
     }
 
     private void handleGiveCommand(CommandSender sender, String[] args) {
         if (args.length < 3) {
-            sender.sendMessage(miniMessage.deserialize("<red>Usage: /eco give <player> <amount></red>"));
+            sender.sendMessage(miniMessage.deserialize("<red>Uso: /eco dar <jugador> <cantidad></red>"));
             return;
         }
 

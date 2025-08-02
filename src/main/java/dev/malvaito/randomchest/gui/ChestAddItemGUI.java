@@ -27,7 +27,7 @@ public class ChestAddItemGUI implements Listener {
         this.plugin = plugin;
         this.randomChest = randomChest;
         this.chestName = chestName;
-        this.inventory = Bukkit.createInventory(null, 27, MiniMessage.miniMessage().deserialize("<gold>Add Items to </gold><green>" + chestName + "</green>"));
+        this.inventory = Bukkit.createInventory(null, 27, MiniMessage.miniMessage().deserialize("<gold>Añadir objetos a </gold><green>" + chestName + "</green>"));
 
         
         List<String> existingItems = randomChest.getChestConfig().getConfig().getStringList("chests." + chestName + ".items");
@@ -64,7 +64,7 @@ public class ChestAddItemGUI implements Listener {
             }
             randomChest.getChestConfig().getConfig().set("chests." + chestName + ".items", newItems);
             randomChest.getChestConfig().saveConfig();
-            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize("<green>Items saved to chest '</green><gold>" + chestName + "</gold><green>'.</green>"));
+            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize("<green>¡Objetos guardados en el cofre '</green><gold>" + chestName + "</gold><green>'.</green>"));
         }
     }
 }

@@ -18,6 +18,9 @@ import dev.malvaito.home.HomeCommand;
 import dev.malvaito.home.HomeManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
+/**
+ * @author Malvaito
+ */
 public class CommandManager {
 
     private final AstroCore plugin;
@@ -26,6 +29,7 @@ public class CommandManager {
     private final RandomChest randomChest;
     private final SpawnCommand spawnCommand;
     private final TPA tpa;
+    private final HomeManager homeManager;
 
     public CommandManager(AstroCore plugin, DatabaseManager databaseManager, MiniMessage miniMessage, RandomChest randomChest, SpawnCommand spawnCommand, TPA tpa) {
         this.plugin = plugin;
@@ -34,6 +38,7 @@ public class CommandManager {
         this.randomChest = randomChest;
         this.spawnCommand = spawnCommand;
         this.tpa = tpa;
+        this.homeManager = new HomeManager(plugin, databaseManager, miniMessage);
     }
 
     public void registerCommands() {
@@ -54,7 +59,6 @@ public class CommandManager {
         plugin.getCommand("randomchest").setExecutor(new RandomChestCommand(plugin, randomChest));
 
         // Register Home commands
-        HomeManager homeManager = new HomeManager(plugin, databaseManager, miniMessage);
         plugin.getCommand("home").setExecutor(new HomeCommand(homeManager, miniMessage));
         plugin.getCommand("sethome").setExecutor(new HomeCommand(homeManager, miniMessage));
         plugin.getCommand("delhome").setExecutor(new HomeCommand(homeManager, miniMessage));

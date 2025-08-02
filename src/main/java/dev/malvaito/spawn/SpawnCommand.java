@@ -31,7 +31,7 @@ public class SpawnCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(miniMessage.deserialize("<red>Only players can use this command.</red>"));
+            sender.sendMessage(miniMessage.deserialize("<red>Solo los jugadores pueden usar este comando.</red>"));
             return true;
         }
 
@@ -39,12 +39,12 @@ public class SpawnCommand implements CommandExecutor {
         UUID playerUUID = player.getUniqueId();
 
         if (teleportingPlayers.containsKey(playerUUID)) {
-            player.sendMessage(miniMessage.deserialize("<red>You are already being teleported.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>Ya estás siendo teletransportado.</red>"));
             return true;
         }
 
         if (!plugin.getConfig().contains("spawn.world")) {
-            player.sendMessage(miniMessage.deserialize("<red>Spawn location not set. Use /setspawn to set it.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>Ubicación de spawn no establecida. Usa /setspawn para establecerla.</red>"));
             return true;
         }
 
@@ -57,7 +57,7 @@ public class SpawnCommand implements CommandExecutor {
 
         Location spawnLocation = new Location(Bukkit.getWorld(worldName), x, y, z, yaw, pitch);
 
-        player.sendMessage(miniMessage.deserialize("<yellow>Teleporting to spawn in 5 seconds. Don't move or take damage.</yellow>"));
+        player.sendMessage(miniMessage.deserialize("<yellow>Teletransportando al spawn en 5 segundos. No te muevas ni recibas daño.</yellow>"));
         teleportingPlayers.put(playerUUID, System.currentTimeMillis());
         playerLocations.put(playerUUID, player.getLocation());
 
@@ -71,7 +71,7 @@ public class SpawnCommand implements CommandExecutor {
                 }
 
                 if (player.getLocation().distanceSquared(playerLocations.get(playerUUID)) > 0.1 || player.getNoDamageTicks() > 0) {
-                    player.sendMessage(miniMessage.deserialize("<red>Teleportation cancelled: you moved or took damage.</red>"));
+                    player.sendMessage(miniMessage.deserialize("<red>Teletransporte cancelado: te moviste o recibiste daño.</red>"));
                     teleportingPlayers.remove(playerUUID);
                     playerLocations.remove(playerUUID);
                     cancel();
@@ -80,12 +80,12 @@ public class SpawnCommand implements CommandExecutor {
 
                 if (countdown <= 0) {
                     player.teleport(spawnLocation);
-                    player.sendMessage(miniMessage.deserialize("<green>You have been teleported to spawn!</green>"));
+                    player.sendMessage(miniMessage.deserialize("<green>¡Has sido teletransportado al spawn!</green>"));
                     teleportingPlayers.remove(playerUUID);
                     playerLocations.remove(playerUUID);
                     cancel();
                 } else {
-                    player.sendMessage(miniMessage.deserialize("<yellow>Teleporting in: " + countdown + "...</yellow>"));
+                    player.sendMessage(miniMessage.deserialize("<yellow>Teletransportando en: " + countdown + "...</yellow>"));
                     countdown--;
                 }
             }

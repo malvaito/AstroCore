@@ -2,6 +2,7 @@ package dev.malvaito.home;
 
 import dev.malvaito.AstroCore;
 import dev.malvaito.database.DatabaseManager;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,6 +23,54 @@ public class HomeManager {
         this.databaseManager = databaseManager;
         this.miniMessage = miniMessage;
         createHomeTable();
+    }
+
+    private Component createMaxHomesReachedMessage(int maxHomes) {
+        return miniMessage.deserialize("<red>Has alcanzado tu número máximo de hogares (</red><gold>" + maxHomes + "</gold><red>).</red>");
+    }
+
+    private Component createHomeSetMessage(String homeName) {
+        return miniMessage.deserialize("<green>¡El hogar '</green><gold>" + homeName + "</gold><green>' ha sido establecido!</green>");
+    }
+
+    private Component createErrorSettingHomeMessage() {
+        return miniMessage.deserialize("<red>Ocurrió un error al establecer tu hogar.</red>");
+    }
+
+    private Component createHomeTeleportedMessage(String homeName) {
+        return miniMessage.deserialize("<green>¡Teletransportado al hogar '</green><gold>" + homeName + "</gold><green>'!</green>");
+    }
+
+    private Component createHomeNotFoundMessage(String homeName) {
+        return miniMessage.deserialize("<red>Hogar '</red><gold>" + homeName + "</gold><red>' no encontrado. Usa /sethome <nombre> para establecer uno.</red>");
+    }
+
+    private Component createErrorTeleportingToHomeMessage() {
+        return miniMessage.deserialize("<red>Ocurrió un error al teletransportarte a tu hogar.</red>");
+    }
+
+    private Component createListHomesMessage(String homesList) {
+        return miniMessage.deserialize("<green>Tus hogares: </green><gold>" + homesList + "</gold>");
+    }
+
+    private Component createNoHomesSetMessage() {
+        return miniMessage.deserialize("<red>No tienes ningún hogar establecido. Usa /sethome <nombre> para establecer uno.</red>");
+    }
+
+    private Component createErrorListingHomesMessage() {
+        return miniMessage.deserialize("<red>Ocurrió un error al listar tus hogares.</red>");
+    }
+
+    private Component createHomeDeletedMessage(String homeName) {
+        return miniMessage.deserialize("<green>¡El hogar '</green><gold>" + homeName + "</gold><green>' ha sido eliminado!</green>");
+    }
+
+    private Component createHomeNotFoundForDeletionMessage(String homeName) {
+        return miniMessage.deserialize("<red>Hogar '</red><gold>" + homeName + "</gold><red>' no encontrado.</red>");
+    }
+
+    private Component createErrorDeletingHomeMessage() {
+        return miniMessage.deserialize("<red>Ocurrió un error al eliminar tu hogar.</red>");
     }
 
     private void createHomeTable() {
@@ -52,7 +101,7 @@ public class HomeManager {
                     if (rs.next()) {
                         int currentHomes = rs.getInt(1);
                         if (currentHomes >= maxHomes) {
-                            player.sendMessage(miniMessage.deserialize("<red>You have reached your maximum number of homes (</red><gold>" + maxHomes + "</gold><red>).</red>"));
+                            player.sendMessage(createMaxHomesReachedMessage(maxHomes));
                             return;
                         }
                     }
@@ -70,11 +119,11 @@ public class HomeManager {
                 statement.setFloat(7, player.getLocation().getYaw());
                 statement.setFloat(8, player.getLocation().getPitch());
                 statement.executeUpdate();
-                player.sendMessage(miniMessage.deserialize("<green>Home '</green><gold>" + homeName + "</gold><green>' has been set!</green>"));
+                player.sendMessage(createHomeSetMessage(homeName));
             }
         } catch (SQLException e) {
             plugin.getLogger().severe("Error setting home: " + e.getMessage());
-            player.sendMessage(miniMessage.deserialize("<red>An error occurred while setting your home.</red>"));
+            player.sendMessage(createErrorSettingHomeMessage());
         }
     }
 
@@ -94,15 +143,15 @@ public class HomeManager {
                         float pitch = resultSet.getFloat("pitch");
 
                         player.teleport(new Location(plugin.getServer().getWorld(worldName), x, y, z, yaw, pitch));
-                        player.sendMessage(miniMessage.deserialize("<green>Teleported to home '</green><gold>" + homeName + "</gold><green>'!</green>"));
+                        player.sendMessage(createHomeTeleportedMessage(homeName));
                     } else {
-                        player.sendMessage(miniMessage.deserialize("<red>Home '</red><gold>" + homeName + "</gold><red>' not found. Use /sethome <name> to set one.</red>"));
+                        player.sendMessage(createHomeNotFoundMessage(homeName));
                     }
                 }
             }
         } catch (SQLException e) {
             plugin.getLogger().severe("Error teleporting to home: " + e.getMessage());
-            player.sendMessage(miniMessage.deserialize("<red>An error occurred while teleporting to your home.</red>"));
+            player.sendMessage(createErrorTeleportingToHomeMessage());
         }
     }
 
@@ -123,15 +172,15 @@ public class HomeManager {
                     }
 
                     if (count > 0) {
-                        player.sendMessage(miniMessage.deserialize("<green>Your homes: </green><gold>" + homesList.toString() + "</gold>"));
+                        player.sendMessage(createListHomesMessage(homesList.toString()));
                     } else {
-                        player.sendMessage(miniMessage.deserialize("<red>You don't have any homes set. Use /sethome <name> to set one.</red>"));
+                        player.sendMessage(createNoHomesSetMessage());
                     }
                 }
             }
         } catch (SQLException e) {
             plugin.getLogger().severe("Error listing homes: " + e.getMessage());
-            player.sendMessage(miniMessage.deserialize("<red>An error occurred while listing your homes.</red>"));
+            player.sendMessage(createErrorListingHomesMessage());
         }
     }
 
@@ -143,14 +192,14 @@ public class HomeManager {
                 statement.setString(2, homeName);
                 int rowsAffected = statement.executeUpdate();
                 if (rowsAffected > 0) {
-                    player.sendMessage(miniMessage.deserialize("<green>Home '</green><gold>" + homeName + "</gold><green>' has been deleted!</green>"));
+                    player.sendMessage(createHomeDeletedMessage(homeName));
                 } else {
-                    player.sendMessage(miniMessage.deserialize("<red>Home '</red><gold>" + homeName + "</gold><red>' not found.</red>"));
+                    player.sendMessage(createHomeNotFoundForDeletionMessage(homeName));
                 }
             }
         } catch (SQLException e) {
             plugin.getLogger().severe("Error deleting home: " + e.getMessage());
-            player.sendMessage(miniMessage.deserialize("<red>An error occurred while deleting your home.</red>"));
+            player.sendMessage(createErrorDeletingHomeMessage());
         }
     }
 }

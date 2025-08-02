@@ -13,14 +13,14 @@ public class Enderchest implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Only players can use this command.</red>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Solo los jugadores pueden usar este comando.</red>"));
             return true;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission("astrocore.command.enderchest")) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You do not have permission to use this command.</red>"));
+            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>No tienes permiso para usar este comando.</red>"));
             return true;
         }
 

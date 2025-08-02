@@ -19,7 +19,7 @@ public class HomeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(miniMessage.deserialize("<red>Only players can use this command.</red>"));
+            sender.sendMessage(miniMessage.deserialize("<red>Solo los jugadores pueden usar este comando.</red>"));
             return true;
         }
 
@@ -35,7 +35,7 @@ public class HomeCommand implements CommandExecutor {
                 return true;
             }
         } else if (args.length == 0) {
-            player.sendMessage(miniMessage.deserialize("<red>Usage: /" + command.getName() + " <home_name></red>"));
+            player.sendMessage(miniMessage.deserialize("<red>Uso: /" + command.getName() + " <nombre_hogar></red>"));
             return true;
         }
 

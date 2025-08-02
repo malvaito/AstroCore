@@ -27,7 +27,7 @@ public class SetSpawnCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (!player.hasPermission("astrocore.command.setspawn")) {
-            player.sendMessage(miniMessage.deserialize("<red>You don't have permission to use this command.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>No tienes permiso para usar este comando.</red>"));
             return true;
         }
 
@@ -39,7 +39,7 @@ public class SetSpawnCommand implements CommandExecutor {
         plugin.getConfig().set("spawn.pitch", player.getLocation().getPitch());
         plugin.saveConfig();
 
-        player.sendMessage(miniMessage.deserialize("<green>Spawn location set to your current location!</green>"));
+        player.sendMessage(miniMessage.deserialize("<green>¡Ubicación de spawn establecida en tu ubicación actual!</green>"));
         return true;
     }
 }

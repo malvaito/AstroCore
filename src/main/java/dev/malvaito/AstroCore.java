@@ -10,6 +10,9 @@ import dev.malvaito.randomchest.scheduler.RandomChestScheduler;
 import dev.malvaito.spawn.SpawnCommand;
 
 
+/**
+ * @author Malvaito
+ */
 public class AstroCore extends JavaPlugin {
 
     private DatabaseManager databaseManager;
@@ -19,41 +22,35 @@ public class AstroCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        initializeManagers();
+        setupCommands();
+        setupListeners();
+    }
 
+    private void initializeManagers() {
         this.randomChest = new RandomChest(this);
         this.randomChest.onEnable();
-
-
         new RandomChestScheduler(this.randomChest).runTaskTimer(this, 0L, 90000L);
-
         this.miniMessage = MiniMessage.miniMessage();
-
         this.databaseManager = DatabaseManager.getInstance();
-
-
         saveDefaultConfig();
-
-
         this.tabManager = new TabManager(this);
-
         this.tabManager.loadConfig();
-
         this.tabManager.updateAllPlayersTab();
+    }
 
-        // Inicializar y registrar comandos
+    private void setupCommands() {
         SpawnCommand spawnCommand = new SpawnCommand(this, miniMessage);
         TPA tpa = new TPA(this);
-
         CommandManager commandManager = new CommandManager(this, databaseManager, miniMessage, randomChest, spawnCommand, tpa);
         commandManager.registerCommands();
+    }
 
-        // Inicializar y registrar listeners
+    private void setupListeners() {
+        SpawnCommand spawnCommand = new SpawnCommand(this, miniMessage);
+        TPA tpa = new TPA(this);
         ListenerManager listenerManager = new ListenerManager(this, databaseManager, miniMessage, randomChest, spawnCommand, tpa.getTpaManager());
         listenerManager.registerListeners();
-
-
-
-
     }
 
     @Override

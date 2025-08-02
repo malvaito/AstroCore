@@ -21,25 +21,25 @@ public class Message implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(miniMessage.deserialize("<red>Only players can use this command.</red>"));
+            sender.sendMessage(miniMessage.deserialize("<red>Solo los jugadores pueden usar este comando.</red>"));
             return true;
         }
 
         Player player = (Player) sender;
 
         if (args.length < 2) {
-            player.sendMessage(miniMessage.deserialize("<red>Usage: /msg <player> <message></red>"));
+            player.sendMessage(miniMessage.deserialize("<red>Uso: /msg <jugador> <mensaje></red>"));
             return true;
         }
 
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         if (targetPlayer == null || !targetPlayer.isOnline()) {
-            player.sendMessage(miniMessage.deserialize("<red>Player not found or is not online.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>Jugador no encontrado o no está en línea.</red>"));
             return true;
         }
 
         if (player.equals(targetPlayer)) {
-            player.sendMessage(miniMessage.deserialize("<red>You cannot message yourself.</red>"));
+            player.sendMessage(miniMessage.deserialize("<red>No puedes enviarte mensajes a ti mismo.</red>"));
             return true;
         }
 
@@ -49,8 +49,8 @@ public class Message implements CommandExecutor {
         }
         String message = messageBuilder.toString().trim();
 
-        player.sendMessage(miniMessage.deserialize("<gray>[<white>You</white> -> <yellow>" + targetPlayer.getName() + "</yellow>] <reset>" + message + "</reset>"));
-        targetPlayer.sendMessage(miniMessage.deserialize("<gray>[<yellow>" + player.getName() + "</yellow> -> <white>You</white>] <reset>" + message + "</reset>"));
+        player.sendMessage(miniMessage.deserialize("<gray>[<white>Tú</white> -> <yellow>" + targetPlayer.getName() + "</yellow>] <reset>" + message + "</reset>"));
+        targetPlayer.sendMessage(miniMessage.deserialize("<gray>[<yellow>" + player.getName() + "</yellow> -> <white>Tú</white>] <reset>" + message + "</reset>"));
 
         setLastMessaged(player.getUniqueId(), targetPlayer.getUniqueId());
 

@@ -17,7 +17,7 @@ public class Feed implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Only players can use this command.</red>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Solo los jugadores pueden usar este comando.</red>"));
             return true;
         }
 
@@ -25,14 +25,14 @@ public class Feed implements CommandExecutor {
         UUID playerUUID = player.getUniqueId();
 
         if (!player.hasPermission("astrocore.command.feed")) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You do not have permission to use this command.</red>"));
+            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>No tienes permiso para usar este comando.</red>"));
             return true;
         }
 
         if (cooldowns.containsKey(playerUUID)) {
             long secondsLeft = ((cooldowns.get(playerUUID) / 1000) + COOLDOWN_SECONDS) - (System.currentTimeMillis() / 1000);
             if (secondsLeft > 0) {
-                player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You are on cooldown! Please wait <gold>" + secondsLeft + "</gold> seconds.</red>"));
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<red>¡Estás en enfriamiento! Por favor, espera <gold>" + secondsLeft + "</gold> segundos.</red>"));
                 return true;
             }
         }
@@ -40,7 +40,7 @@ public class Feed implements CommandExecutor {
         cooldowns.put(playerUUID, System.currentTimeMillis());
         player.setSaturation(10);
         player.setFoodLevel(20);
-        player.sendMessage(MiniMessage.miniMessage().deserialize("<green>You have been feed!</green>"));
+        player.sendMessage(MiniMessage.miniMessage().deserialize("<green>¡Has sido alimentado!</green>"));
         return true;
     }
 }

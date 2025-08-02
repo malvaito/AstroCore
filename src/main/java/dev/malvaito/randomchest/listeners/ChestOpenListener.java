@@ -14,6 +14,9 @@ import org.bukkit.event.block.Action;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Malvaito
+ */
 public class ChestOpenListener implements Listener {
 
     private final ChestManager chestManager;
@@ -38,8 +41,8 @@ public class ChestOpenListener implements Listener {
                     
                     if (!openedChests.contains(chestLocationKey)) {
                         Location loc = event.getClickedBlock().getLocation();
-                        String message = String.format("<green>%s opened a random chest at X:%.0f Y:%.0f Z:%.0f!</green>", 
-                            event.getPlayer().getName(), loc.getX(), loc.getY(), loc.getZ());
+                        String message = String.format("<green>¡%s abrió un cofre aleatorio en X:%.0f Y:%.0f Z:%.0f!</green>",
+                                 event.getPlayer().getName(), loc.getX(), loc.getY(), loc.getZ());
                         Bukkit.broadcast(MiniMessage.miniMessage().deserialize(message));
                         openedChests.add(chestLocationKey);
                     }

@@ -24,7 +24,7 @@ public class RandomChestCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         org.bukkit.entity.Player player = null;
         if (args.length == 0) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Usage: /randomchest <create|additem|spawn></gold>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Uso: /randomchest <create|additem|spawn></gold>"));
             return true;
         }
 
@@ -33,28 +33,28 @@ public class RandomChestCommand implements CommandExecutor {
         switch (subCommand) {
             case "create":
                 if (args.length < 2) {
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Usage: /randomchest create <chest_name></gold>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Uso: /randomchest create <nombre_cofre></gold>"));
                     return true;
                 }
                 String chestName = args[1];
                 if (randomChest.getChestConfig().getConfig().contains("chests." + chestName)) {
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Chest '</red><gold>" + chestName + "</gold><red>' already exists.</red>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>El cofre '</red><gold>" + chestName + "</gold><red>' ya existe.</red>"));
                     return true;
                 }
                 randomChest.getChestConfig().getConfig().set("chests." + chestName + ".items", new java.util.ArrayList<String>());
                 randomChest.getChestConfig().getConfig().set("chests." + chestName + ".random-slots", false);
                 randomChest.getChestConfig().saveConfig();
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Chest '</green><gold>" + chestName + "</gold><green>' created in configuration.</green>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Cofre '</green><gold>" + chestName + "</gold><green>' creado en la configuración.</green>"));
                 break;
             case "spawn":
                 if (!(sender instanceof org.bukkit.entity.Player)) {
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>This command can only be executed by a player.</red>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Este comando solo puede ser ejecutado por un jugador.</red>"));
                     return true;
                 }
                 player = (org.bukkit.entity.Player) sender;
 
                 if (args.length < 3) {
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Usage: /randomchest spawn <chest_name> <here|random></gold>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Uso: /randomchest spawn <nombre_cofre> <aqui|aleatorio></gold>"));
                     return true;
                 }
 
@@ -62,18 +62,18 @@ public class RandomChestCommand implements CommandExecutor {
                 String spawnType = args[2].toLowerCase();
 
                 if (!randomChest.getChestConfig().getConfig().contains("chests." + spawnChestName)) {
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Chest '</red><gold>" + spawnChestName + "</gold><red>' does not exist in configuration.</red>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>El cofre '</red><gold>" + spawnChestName + "</gold><red>' no existe en la configuración.</red>"));
                     return true;
                 }
 
                 if (spawnType.equals("here")) {
                     randomChest.getChestManager().createChestAtLocation(spawnChestName, player.getLocation());
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Chest of type '</green><gold>" + spawnChestName + "</gold><green>' spawned at your location.</green>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Cofre de tipo '</green><gold>" + spawnChestName + "</gold><green>' generado en tu ubicación.</green>"));
                 } else if (spawnType.equals("random")) {
                     randomChest.generateRandomChest();
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Chest of type '</green><gold>" + spawnChestName + "</gold><green>' spawned at a random location.</green>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Cofre de tipo '</green><gold>" + spawnChestName + "</gold><green>' generado en una ubicación aleatoria.</green>"));
                 } else {
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Invalid spawn type. Usage: /randomchest spawn <chest_name> <here|random></red>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Tipo de aparición inválido. Uso: /randomchest spawn <nombre_cofre> <aqui|aleatorio></red>"));
                 }
                 break;
             case "additem":
@@ -84,7 +84,7 @@ public class RandomChestCommand implements CommandExecutor {
                 player = (org.bukkit.entity.Player) sender;
 
                 if (args.length < 3) {
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Usage: /randomchest additem <chest_name> <hand|gui></gold>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>Uso: /randomchest additem <nombre_cofre> <mano|gui></gold>"));
                     return true;
                 }
 
@@ -99,7 +99,7 @@ public class RandomChestCommand implements CommandExecutor {
                 if (addType.equals("hand")) {
                     org.bukkit.inventory.ItemStack itemInHand = player.getInventory().getItemInMainHand();
                     if (itemInHand.getType() == org.bukkit.Material.AIR) {
-                        sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>You must have an item in your hand to use 'hand'.</red>"));
+                        sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Debes tener un objeto en la mano para usar 'mano'.</red>"));
                         return true;
                     }
                     java.util.List<String> items = randomChest.getChestConfig().getConfig().getStringList("chests." + targetChestName + ".items");
@@ -111,17 +111,17 @@ public class RandomChestCommand implements CommandExecutor {
                     }
                     randomChest.getChestConfig().getConfig().set("chests." + targetChestName + ".items", items);
                     randomChest.getChestConfig().saveConfig();
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Item added to chest '</green><gold>" + targetChestName + "</gold><green>' from your hand.</green>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Objeto añadido al cofre '</green><gold>" + targetChestName + "</gold><green>' desde tu mano.</green>"));
                 } else if (addType.equals("gui")) {
                     ChestAddItemGUI gui = new dev.malvaito.randomchest.gui.ChestAddItemGUI(plugin, randomChest, targetChestName);
                     gui.open(player);
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Opening GUI for chest '</green><gold>" + targetChestName + "</gold><green>'.</green>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Abriendo GUI para el cofre '</green><gold>" + targetChestName + "</gold><green>'.</green>"));
                 } else {
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Invalid add type. Usage: /randomchest additem <chest_name> <hand|gui></red>"));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Tipo de adición inválido. Uso: /randomchest additem <nombre_cofre> <mano|gui></red>"));
                 }
                 break;
             default:
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Unknown command. Usage: /randomchest <create|additem|spawn></red>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Comando desconocido. Uso: /randomchest <create|additem|spawn></red>"));
                 break;
         }
 

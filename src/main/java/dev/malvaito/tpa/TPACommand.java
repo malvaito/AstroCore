@@ -22,7 +22,7 @@ public class TPACommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(plugin.miniMessage.deserialize("<red>Only players can use this command.</red>"));
+            sender.sendMessage(plugin.miniMessage.deserialize("<red>Solo los jugadores pueden usar este comando.</red>"));
             return true;
         }
 
@@ -31,7 +31,7 @@ public class TPACommand implements CommandExecutor {
 
         if (tpaManager.isOnCooldown(player.getUniqueId())) {
             long remainingTime = tpaManager.getRemainingCooldown(player.getUniqueId());
-            player.sendMessage(plugin.miniMessage.deserialize("<red>You are on cooldown. Please wait " + remainingTime + " seconds.</red>"));
+            player.sendMessage(plugin.miniMessage.deserialize("<red>Estás en enfriamiento. Por favor, espera " + remainingTime + " segundos.</red>"));
             return true;
         }
 
@@ -59,18 +59,18 @@ public class TPACommand implements CommandExecutor {
             Player target = plugin.getServer().getPlayer(args[0]);
             if (target != null && target.isOnline()) {
                 if (target.getUniqueId().equals(player.getUniqueId())) {
-                    player.sendMessage(plugin.miniMessage.deserialize("<red>You cannot send a teleport request to yourself.</red>"));
+                    player.sendMessage(plugin.miniMessage.deserialize("<red>No puedes enviarte una solicitud de teletransporte a ti mismo.</red>"));
                     return;
                 }
                 tpaManager.getTpaRequests().put(target.getUniqueId(), player.getUniqueId());
-                player.sendMessage(plugin.miniMessage.deserialize("<green>You have sent a teleport request to <gold>" + target.getName() + "</gold>.</green>"));
-                target.sendMessage(plugin.miniMessage.deserialize("<gold>" + player.getName() + "</gold> has sent you a teleport request. Use <green>/tpaccept</green> to accept or <red>/tpadeny</red> to deny."));
+                player.sendMessage(plugin.miniMessage.deserialize("<green>Has enviado una solicitud de teletransporte a <gold>" + target.getName() + "</gold>.</green>"));
+                target.sendMessage(plugin.miniMessage.deserialize("<gold>" + player.getName() + "</gold> te ha enviado una solicitud de teletransporte. Usa <green>/tpaccept</green> para aceptar o <red>/tpadeny</red> para denegar."));
                 tpaManager.addCooldown(player.getUniqueId(), 60 * 1000);
             } else {
-                player.sendMessage(plugin.miniMessage.deserialize("<red>Player not found or is not online.</red>"));
+                player.sendMessage(plugin.miniMessage.deserialize("<red>Jugador no encontrado o no está en línea.</red>"));
             }
         } else {
-            player.sendMessage(plugin.miniMessage.deserialize("<red>Usage: /tpa <player></red>"));
+            player.sendMessage(plugin.miniMessage.deserialize("<red>Uso: /tpa <jugador></red>"));
         }
     }
 
@@ -79,15 +79,15 @@ public class TPACommand implements CommandExecutor {
             UUID requesterUUID = tpaManager.getTpaRequests().remove(player.getUniqueId());
             Player requester = plugin.getServer().getPlayer(requesterUUID);
             if (requester != null && requester.isOnline()) {
-                player.sendMessage(plugin.miniMessage.deserialize("<green>You have accepted the teleport request from <gold>" + requester.getName() + "</gold>.</green>"));
-                requester.sendMessage(plugin.miniMessage.deserialize("<green>Your teleport request has been accepted by <gold>" + player.getName() + "</gold>. Teleporting in 5 seconds...</green>"));
+                player.sendMessage(plugin.miniMessage.deserialize("<green>Has aceptado la solicitud de teletransporte de <gold>" + requester.getName() + "</gold>.</green>"));
+                requester.sendMessage(plugin.miniMessage.deserialize("<green>Tu solicitud de teletransporte ha sido aceptada por <gold>" + player.getName() + "</gold>. Teletransportando en 5 segundos...</green>"));
 
                 tpaManager.addTeleportTask(requester.getUniqueId(), plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                     if (requester.isOnline() && tpaManager.getPlayerLocations().containsKey(requester.getUniqueId()) && tpaManager.getPlayerLocations().get(requester.getUniqueId()).equals(requester.getLocation())) {
                         requester.teleport(player.getLocation());
-                        requester.sendMessage(plugin.miniMessage.deserialize("<green>You have been teleported to <gold>" + player.getName() + "</gold>.</green>"));
+                        requester.sendMessage(plugin.miniMessage.deserialize("<green>Has sido teletransportado a <gold>" + player.getName() + "</gold>.</green>"));
                     } else {
-                        requester.sendMessage(plugin.miniMessage.deserialize("<red>Teleport cancelled because you moved or took damage.</red>"));
+                        requester.sendMessage(plugin.miniMessage.deserialize("<red>Teletransporte cancelado porque te moviste o recibiste daño.</red>"));
                     }
                     tpaManager.getTeleportTasks().remove(requester.getUniqueId());
                     tpaManager.getPlayerLocations().remove(requester.getUniqueId());
@@ -95,10 +95,10 @@ public class TPACommand implements CommandExecutor {
 
                 tpaManager.addCooldown(player.getUniqueId(), 5 * 1000);
             } else {
-                player.sendMessage(plugin.miniMessage.deserialize("<red>The player who sent the request is no longer online.</red>"));
+                player.sendMessage(plugin.miniMessage.deserialize("<red>El jugador que envió la solicitud ya no está en línea.</red>"));
             }
         } else {
-            player.sendMessage(plugin.miniMessage.deserialize("<red>You have no pending teleport requests.</red>"));
+            player.sendMessage(plugin.miniMessage.deserialize("<red>No tienes solicitudes de teletransporte pendientes.</red>"));
         }
     }
 
@@ -107,8 +107,8 @@ public class TPACommand implements CommandExecutor {
             UUID requesterUUID = tpaManager.getTpaRequests().remove(player.getUniqueId());
             Player requester = plugin.getServer().getPlayer(requesterUUID);
             if (requester != null && requester.isOnline()) {
-                player.sendMessage(plugin.miniMessage.deserialize("<red>You have denied the teleport request from <gold>" + requester.getName() + "</gold>.</red>"));
-                requester.sendMessage(plugin.miniMessage.deserialize("<red>Your teleport request has been denied by <gold>" + player.getName() + "</gold>.</red>"));
+                player.sendMessage(plugin.miniMessage.deserialize("<red>Has denegado la solicitud de teletransporte de <gold>" + requester.getName() + "</gold>.</red>"));
+                requester.sendMessage(plugin.miniMessage.deserialize("<red>Tu solicitud de teletransporte ha sido denegada por <gold>" + player.getName() + "</gold>.</red>"));
             } else {
                 player.sendMessage(plugin.miniMessage.deserialize("<red>The player who sent the request is no longer online.</red>"));
             }
@@ -122,18 +122,18 @@ public class TPACommand implements CommandExecutor {
             Player target = plugin.getServer().getPlayer(args[0]);
             if (target != null && target.isOnline()) {
                 if (target.getUniqueId().equals(player.getUniqueId())) {
-                    player.sendMessage(plugin.miniMessage.deserialize("<red>You cannot send a teleport request to yourself.</red>"));
+                    player.sendMessage(plugin.miniMessage.deserialize("<red>No puedes enviarte una solicitud de teletransporte a ti mismo.</red>"));
                     return;
                 }
                 tpaManager.getTpaRequests().put(target.getUniqueId(), player.getUniqueId());
-                player.sendMessage(plugin.miniMessage.deserialize("<green>You have sent a request for <gold>" + target.getName() + "</gold> to teleport to you.</green>"));
-                target.sendMessage(plugin.miniMessage.deserialize("<gold>" + player.getName() + "</gold> has sent you a request to teleport to them. Use <green>/tpaccept</green> to accept or <red>/tpadeny</red> to deny.</green>"));
+                player.sendMessage(plugin.miniMessage.deserialize("<green>Has enviado una solicitud para que <gold>" + target.getName() + "</gold> se teletransporte a ti.</green>"));
+                target.sendMessage(plugin.miniMessage.deserialize("<gold>" + player.getName() + "</gold> te ha enviado una solicitud para teletransportarse a ti. Usa <green>/tpaccept</green> para aceptar o <red>/tpadeny</red> para denegar.</green>"));
                 tpaManager.addCooldown(player.getUniqueId(), 60 * 1000);
             } else {
-                player.sendMessage(plugin.miniMessage.deserialize("<red>Player not found or is not online.</red>"));
+                player.sendMessage(plugin.miniMessage.deserialize("<red>Jugador no encontrado o no está en línea.</red>"));
             }
         } else {
-            player.sendMessage(plugin.miniMessage.deserialize("<red>Usage: /tpahere <player></red>"));
+            player.sendMessage(plugin.miniMessage.deserialize("<red>Uso: /tpahere <jugador></red>"));
         }
     }
 }
