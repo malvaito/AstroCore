@@ -1,7 +1,6 @@
 package dev.malvaito.tpa;
 
 import dev.malvaito.AstroCore;
-import dev.malvaito.database.DatabaseManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

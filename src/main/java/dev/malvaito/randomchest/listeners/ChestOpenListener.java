@@ -14,9 +14,7 @@ import org.bukkit.event.block.Action;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author Malvaito
- */
+
 public class ChestOpenListener implements Listener {
 
     private final ChestManager chestManager;

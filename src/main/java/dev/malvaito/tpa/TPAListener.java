@@ -10,9 +10,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.UUID;
 
-/**
- * @author Malvaito
- */
+
 public class TPAListener implements Listener {
 
     private final AstroCore plugin;

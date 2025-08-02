@@ -10,14 +10,12 @@ import java.util.UUID;
 
 public class TPAManager {
 
-    private final AstroCore plugin;
     private final Map<UUID, UUID> tpaRequests; // Target UUID -> Requester UUID
     private final Map<UUID, Long> cooldowns;
     private final Map<UUID, BukkitTask> teleportTasks;
     private final Map<UUID, Location> playerLocations;
 
     public TPAManager(AstroCore plugin) {
-        this.plugin = plugin;
         this.tpaRequests = new HashMap<>();
         this.cooldowns = new HashMap<>();
         this.teleportTasks = new HashMap<>();

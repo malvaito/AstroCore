@@ -10,17 +10,12 @@ import dev.malvaito.spawn.SpawnCommand;
 import dev.malvaito.tpa.TPAManager;
 import dev.malvaito.tpa.TPAListener;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.event.Listener;
 import dev.malvaito.listeners.SpawnTeleportCancelListener;
 
-/**
- * @author Malvaito
- */
 public class ListenerManager {
 
     private final AstroCore plugin;
     private final DatabaseManager databaseManager;
-    private final MiniMessage miniMessage;
     private final RandomChest randomChest;
     private final SpawnCommand spawnCommand;
     private final TPAManager tpaManager;
@@ -28,7 +23,6 @@ public class ListenerManager {
     public ListenerManager(AstroCore plugin, DatabaseManager databaseManager, MiniMessage miniMessage, RandomChest randomChest, SpawnCommand spawnCommand, TPAManager tpaManager) {
         this.plugin = plugin;
         this.databaseManager = databaseManager;
-        this.miniMessage = miniMessage;
         this.randomChest = randomChest;
         this.spawnCommand = spawnCommand;
         this.tpaManager = tpaManager;

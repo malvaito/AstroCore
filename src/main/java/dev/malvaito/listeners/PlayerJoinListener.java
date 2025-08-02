@@ -2,15 +2,11 @@ package dev.malvaito.listeners;
 
 import dev.malvaito.AstroCore;
 import dev.malvaito.database.DatabaseManager;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-/**
- * @author Malvaito
- */
 public class PlayerJoinListener implements Listener {
 
     private final AstroCore plugin;

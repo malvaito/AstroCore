@@ -10,9 +10,7 @@ import dev.malvaito.randomchest.scheduler.RandomChestScheduler;
 import dev.malvaito.spawn.SpawnCommand;
 
 
-/**
- * @author Malvaito
- */
+
 public class AstroCore extends JavaPlugin {
 
     private DatabaseManager databaseManager;

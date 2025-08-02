@@ -18,9 +18,7 @@ import dev.malvaito.home.HomeCommand;
 import dev.malvaito.home.HomeManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
-/**
- * @author Malvaito
- */
+
 public class CommandManager {
 
     private final AstroCore plugin;

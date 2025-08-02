@@ -6,9 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-/**
- * @author Malvaito
- */
+
 public class SpawnTeleportCancelListener implements Listener {
 
     private final SpawnCommand spawnCommand;
